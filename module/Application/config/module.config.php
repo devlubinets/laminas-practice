@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Application;
 
+use Application\Form\SimpleV1Form;
+use CampaignModule\Form\CampaignCreateCampaignForm;
+use CampaignModule\Form\CampaignDownloadBusinessesForm;
+use CampaignModule\Form\Factory\CampaignCreateCampaignFormFactory;
+use CampaignModule\Form\Factory\CampaignDownloadBusinessesFormFactory;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
@@ -17,6 +22,16 @@ return [
                     'route'    => '/',
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
+            'form'  => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/form',
+                    'defaults' => [
+                        'controller' => Controller\FormController::class,
                         'action'     => 'index',
                     ],
                 ],
@@ -36,6 +51,12 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+            Controller\FormController::class => InvokableFactory::class,
+        ],
+    ],
+    "form_elements" => [
+        "factories" => [
+            SimpleV1Form::class => InvokableFactory::class
         ],
     ],
     'view_manager' => [
