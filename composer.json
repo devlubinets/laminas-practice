@@ -60,6 +60,7 @@
         }
     },
     "require-dev": {
-        "pestphp/pest": "^2.28"
+        "pestphp/pest": "^2.28",
+        "behat/behat": "^3.13"
     }
 }
