@@ -4,12 +4,16 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use PHPUnit\Framework\Assert;
 
 /**
  * Defines application features from the specific context.
  */
 class FeatureContext implements Context
 {
+    private $shelf;
+    private $basket;
+
     /**
      * Initializes context.
      *
@@ -19,45 +23,45 @@ class FeatureContext implements Context
      */
     public function __construct()
     {
+        $this->shelf = new Shelf();
+        $this->basket = new Basket($this->shelf);
     }
 
     /**
-     * @Given there is a :arg1, which costs £:arg2
+     * @Given there is a :product, which costs £:price
      */
-    public function thereIsAWhichCostsPs($arg1, $arg2)
+    public function thereIsAWhichCostsPs($product, $price)
     {
-        throw new PendingException();
+        $this->shelf->setProductPrice($product, floatval($price));
     }
 
     /**
-     * @When I add the :arg1 to the basket
+     * @When I add the :product to the basket
      */
-    public function iAddTheToTheBasket($arg1)
+    public function iAddTheToTheBasket($product)
     {
-        throw new PendingException();
+        $this->basket->addProduct($product);
     }
 
     /**
-     * @Then I should have :arg1 product in the basket
+     * @Then I should have :count product(s) in the basket
      */
-    public function iShouldHaveProductInTheBasket($arg1)
+    public function iShouldHaveProductInTheBasket($count)
     {
-        throw new PendingException();
+        Assert::assertCount(
+            intval($count),
+            $this->basket
+        );
     }
 
     /**
-     * @Then the overall basket price should be £:arg1
+     * @Then the overall basket price should be £:price
      */
-    public function theOverallBasketPriceShouldBePs($arg1)
+    public function theOverallBasketPriceShouldBePs($price)
     {
-        throw new PendingException();
-    }
-
-    /**
-     * @Then I should have :arg1 products in the basket
-     */
-    public function iShouldHaveProductsInTheBasket($arg1)
-    {
-        throw new PendingException();
+        Assert::assertSame(
+            floatval($price),
+            $this->basket->getTotalPrice()
+        );
     }
 }
