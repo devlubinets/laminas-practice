@@ -12,5 +12,6 @@ return [
     'Laminas\Filter',
     'Laminas\Router',
     'Laminas\Validator',
+    'IarPortalModule',
     'Application',
 ];
